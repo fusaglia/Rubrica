@@ -1,5 +1,4 @@
-bella raga;
+bella raga
 
 
-
-negro
+nigga
