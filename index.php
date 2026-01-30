@@ -1,7 +1,6 @@
 <?php
-include "db.php";  // collegamento al DB
+include "connessione.php";
 
-// Leggo tutti i contatti
 $sql = "SELECT * FROM contatti";
 $result = $conn->query($sql);
 ?>
@@ -29,6 +28,7 @@ $result = $conn->query($sql);
         <th>Telefono</th>
         <th>Azioni</th>
     </tr>
+
     <?php
     if ($result->num_rows > 0) {
         // Ciclo tutti i contatti
@@ -47,9 +47,10 @@ $result = $conn->query($sql);
         echo "<tr><td colspan='3'>Nessun contatto</td></tr>";
     }
     ?>
+
 </table>
 
-<!-- Bottone Aggiungi -->
+
 <a href="?add=1"><button>Aggiungi Contatto</button></a>
 
 </body>
