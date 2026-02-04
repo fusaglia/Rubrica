@@ -1,5 +1,5 @@
 <?php
-include "connessione.php";
+include "controller/connessione.php";
 
 $sql = "SELECT * FROM contatti";
 $result = $conn->query($sql);
@@ -9,6 +9,7 @@ $result = $conn->query($sql);
 <html>
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rubrica</title>
     <style>
         table {
@@ -37,13 +38,19 @@ $result = $conn->query($sql);
 <?php
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
+        
+        // ✅ Escape output per sicurezza XSS
+        $id = intval($row['id']);
+        $nome = htmlspecialchars($row['nome']);
+        $tel = htmlspecialchars($row['tel']);
 
         echo "<tr>";
-        echo "<td>" . $row['nome'] . "</td>";
-        echo "<td>" . $row['tel'] . "</td>";
+        echo "<td>" . $nome . "</td>";
+        echo "<td>" . $tel . "</td>";
         echo "<td>
-                <a href='modifica.php?id=".$row['id']."'><button>Modifica</button></a>
-                <a href='elimina.php?id=".$row['id']."'><button>Elimina</button></a>
+                <a href='model/modifica.php?id=".$id."'><button>Modifica</button></a>
+                <a href='model/elimina.php?id=".$id."'><button>Elimina</button></a>
+                <a href='model/chat.php?tel=".$tel."'><button>Messaggia</button></a>
               </td>";
         echo "</tr>";
     }
@@ -55,7 +62,7 @@ if ($result->num_rows > 0) {
 
 <br>
 
-<a href="aggiungi.php"><button>Aggiungi Contatto</button></a>
+<a href="model/aggiungi.php"><button>Aggiungi Contatto</button></a>
 
 </body>
 </html>
